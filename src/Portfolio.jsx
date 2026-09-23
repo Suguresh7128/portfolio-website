@@ -20,6 +20,12 @@ import {
   Star,
 } from "lucide-react";
 
+import GlassCard from './GlassCard';
+import GradientBorder from './GradientBorder';
+import SectionLabel from './SectionLabel';
+import ProjectCard from './ProjectCard';
+import SkillGroup from './SkillGroup';
+
 // ─────────────────────────────────────────────
 // DATA
 // ─────────────────────────────────────────────
@@ -204,38 +210,34 @@ const fadeUp = (delay = 0) => ({
   viewport: { once: true },
 });
 
-const GlassCard = ({ children, className = "", style = {} }) => (
-  <div
-    className={`bg-white/[0.04] border border-white/[0.08] rounded-2xl ${className}`}
-    style={{ backdropFilter: "blur(16px)", ...style }}
-  >
-    {children}
-  </div>
-);
+// Small style helpers to avoid repeating gradient/text style objects
+const gradient = (g1, g2, deg = '135deg') => `linear-gradient(${deg}, ${g1}, ${g2})`;
+const textGradient = (g1, g2, deg = '90deg') => ({
+  background: gradient(g1, g2, deg),
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+});
 
-// Gradient-border wrapper
-const GradientBorder = ({ g1, g2, children, className = "" }) => (
-  <div
-    className={`rounded-2xl p-px ${className}`}
-    style={{ background: `linear-gradient(135deg, ${g1}, ${g2})` }}
-  >
-    <div className="rounded-2xl h-full" style={{ background: "#07071a" }}>
-      {children}
-    </div>
-  </div>
-);
-
-const SectionLabel = ({ children, gradient }) => (
-  <motion.div {...fadeUp()} className="mb-12">
-    <p
-      className="text-xs font-bold tracking-[0.25em] uppercase mb-2"
-      style={{ background: gradient, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-    >
-      ✦ {children}
-    </p>
-    <div className="h-px w-16 rounded-full opacity-50" style={{ background: gradient }} />
-  </motion.div>
-);
+// Reusable lists moved out of JSX for clarity
+const FLOAT_TAGS = ["<React />", "Node.js", "MongoDB", "Python", "Docker", "AI/ML"];
+const SOCIAL_LINKS = [
+  { I: Github, href: "https://github.com/Suguresh7128", label: "GitHub" },
+  { I: Linkedin, href: "https://linkedin.com/in/suguresh-a-y-57675b22b", label: "LinkedIn" },
+  { I: Mail, href: "mailto:sugureshay8@gmail.com", label: "Email" },
+  { I: Phone, href: "tel:+919480639134", label: "Phone" },
+];
+const ABOUT_STATS = [
+  { label: "Projects Built", val: "8+", I: Code2, g: gradient('#7C3AED', '#A855F7') },
+  { label: "Certifications", val: "8", I: Award, g: gradient('#DB2777', '#EC4899') },
+  { label: "Internships", val: "3", I: Briefcase, g: gradient('#0891B2', '#06B6D4') },
+  { label: "CGPA", val: "7.3", I: BookOpen, g: gradient('#059669', '#10B981') },
+];
+const CONTACT_ITEMS = [
+  { I: Mail, label: "sugureshay8@gmail.com", href: "mailto:sugureshay8@gmail.com", c: "#a78bfa" },
+  { I: Phone, label: "+91-9480639134", href: "tel:+919480639134", c: "#a78bfa" },
+  { I: Github, label: "github.com/Suguresh7128", href: "https://github.com/Suguresh7128", c: "#a78bfa" },
+  { I: Linkedin, label: "LinkedIn Profile", href: "https://linkedin.com/in/suguresh-a-y-57675b22b", c: "#a78bfa" },
+  ];
 
 // ─────────────────────────────────────────────
 // MAIN
@@ -420,27 +422,25 @@ export default function Portfolio() {
         className="min-h-screen relative flex flex-col items-center justify-center text-center px-4 pt-24 overflow-hidden"
       >
         {/* Floating tech tags */}
-        {["<React />", "Node.js", "MongoDB", "Python", "Docker", "AI/ML"].map(
-          (tag, i) => (
-            <motion.div
-              key={tag}
-              className="absolute hidden lg:block text-[11px] font-mono text-purple-400/50 border border-purple-500/20 px-2.5 py-1 rounded-lg"
-              style={{
-                left: `${8 + (i % 3) * 30}%`,
-                top: `${18 + Math.floor(i / 3) * 55}%`,
-              }}
-              animate={{ y: [0, -14, 0], opacity: [0.3, 0.65, 0.3] }}
-              transition={{
-                duration: 3.5 + i * 0.6,
-                repeat: Infinity,
-                delay: i * 0.5,
-                ease: "easeInOut",
-              }}
-            >
-              {tag}
-            </motion.div>
-          )
-        )}
+        {FLOAT_TAGS.map((tag, i) => (
+                    <motion.div
+                      key={tag}
+                      className="absolute hidden lg:block text-[11px] font-mono text-purple-400/50 border border-purple-500/20 px-2.5 py-1 rounded-lg"
+                      style={{
+                        left: `${8 + (i % 3) * 30}%`,
+                        top: `${18 + Math.floor(i / 3) * 55}%`,
+                      }}
+                      animate={{ y: [0, -14, 0], opacity: [0.3, 0.65, 0.3] }}
+                      transition={{
+                        duration: 3.5 + i * 0.6,
+                        repeat: Infinity,
+                        delay: i * 0.5,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      {tag}
+                    </motion.div>
+                  ))}
 
         {/* Status badge */}
         <motion.div
@@ -521,30 +521,25 @@ export default function Portfolio() {
           transition={{ delay: 0.9 }}
           className="flex flex-wrap justify-center gap-3 mb-10"
         >
-          {[
-            { I: Github, href: "https://github.com/Suguresh7128", label: "GitHub" },
-            { I: Linkedin, href: "https://linkedin.com/in/suguresh-a-y-57675b22b", label: "LinkedIn" },
-            { I: Mail, href: "mailto:sugureshay8@gmail.com", label: "Email" },
-            { I: Phone, href: "tel:+919480639134", label: "Phone" },
-          ].map(({ I, href, label }) => (
-            <motion.a
-              key={label}
-              href={href}
-              target={href.startsWith("http") ? "_blank" : undefined}
-              rel="noreferrer"
-              whileHover={{ y: -3, scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200"
-              style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                color: "rgba(255,255,255,0.7)",
-              }}
-            >
-              <I className="w-4 h-4" style={{ color: "#a78bfa" }} />
-              {label}
-            </motion.a>
-          ))}
+          {SOCIAL_LINKS.map(({ I, href, label }) => (
+                      <motion.a
+                        key={label}
+                        href={href}
+                        target={href.startsWith("http") ? "_blank" : undefined}
+                        rel="noreferrer"
+                        whileHover={{ y: -3, scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors duration-200"
+                        style={{
+                          background: "rgba(255,255,255,0.05)",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          color: "rgba(255,255,255,0.7)",
+                        }}
+                      >
+                        <I className="w-4 h-4" style={{ color: "#a78bfa" }} />
+                        {label}
+                      </motion.a>
+                    ))}
         </motion.div>
 
         {/* CTAs */}
@@ -637,34 +632,29 @@ export default function Portfolio() {
 
           {/* Stats grid */}
           <div className="grid grid-cols-2 gap-4">
-            {[
-              { label: "Projects Built", val: "8+", I: Code2, g: "linear-gradient(135deg,#7C3AED,#A855F7)" },
-              { label: "Certifications", val: "8", I: Award, g: "linear-gradient(135deg,#DB2777,#EC4899)" },
-              { label: "Internships", val: "3", I: Briefcase, g: "linear-gradient(135deg,#0891B2,#06B6D4)" },
-              { label: "CGPA", val: "7.3", I: BookOpen, g: "linear-gradient(135deg,#059669,#10B981)" },
-            ].map(({ label, val, I, g }, i) => (
-              <motion.div
-                key={label}
-                {...fadeUp(0.1 + i * 0.08)}
-                whileHover={{ scale: 1.04, y: -3 }}
-              >
-                <GlassCard className="p-5 flex flex-col items-center justify-center text-center min-h-[110px]">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"
-                    style={{ background: g }}
-                  >
-                    <I className="w-4 h-4 text-white" />
-                  </div>
-                  <div
-                    className="text-3xl font-black mb-1"
-                    style={{ background: g, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-                  >
-                    {val}
-                  </div>
-                  <div className="text-gray-500 text-xs">{label}</div>
-                </GlassCard>
-              </motion.div>
-            ))}
+            {ABOUT_STATS.map(({ label, val, I, g }, i) => (
+                          <motion.div
+                            key={label}
+                            {...fadeUp(0.1 + i * 0.08)}
+                            whileHover={{ scale: 1.04, y: -3 }}
+                          >
+                            <GlassCard className="p-5 flex flex-col items-center justify-center text-center min-h-[110px]">
+                              <div
+                                className="w-9 h-9 rounded-xl flex items-center justify-center mb-3"
+                                style={{ background: g }}
+                              >
+                                <I className="w-4 h-4 text-white" />
+                              </div>
+                              <div
+                                className="text-3xl font-black mb-1"
+                                style={{ background: g, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
+                              >
+                                {val}
+                              </div>
+                              <div className="text-gray-500 text-xs">{label}</div>
+                            </GlassCard>
+                          </motion.div>
+                        ))}
           </div>
         </div>
       </section>
@@ -677,50 +667,9 @@ export default function Portfolio() {
           Technical Skills
         </SectionLabel>
         <div className="space-y-4">
-          {SKILL_GROUPS.map(({ label, Icon, from, to, items }, gi) => (
-            <motion.div key={label} {...fadeUp(gi * 0.07)}>
-              <GlassCard className="p-5">
-                <div className="flex items-center gap-3 mb-4">
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: `linear-gradient(135deg,${from},${to})` }}
-                  >
-                    <Icon className="w-4 h-4 text-white" />
-                  </div>
-                  <span
-                    className="text-sm font-bold"
-                    style={{
-                      background: `linear-gradient(90deg,${from},${to})`,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
-                  >
-                    {label}
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {items.map((skill, si) => (
-                    <motion.span
-                      key={skill}
-                      initial={{ opacity: 0, scale: 0.85 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: gi * 0.04 + si * 0.03 }}
-                      whileHover={{ y: -2, scale: 1.06 }}
-                      className="px-3 py-1 text-xs rounded-full cursor-default transition-colors duration-200"
-                      style={{
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        color: "rgba(255,255,255,0.7)",
-                      }}
-                    >
-                      {skill}
-                    </motion.span>
-                  ))}
-                </div>
-              </GlassCard>
-            </motion.div>
-          ))}
+          {SKILL_GROUPS.map((group, gi) => (
+                      <SkillGroup key={group.label} group={group} index={gi} fadeUp={fadeUp} />
+                    ))}
         </div>
       </section>
 
@@ -733,61 +682,8 @@ export default function Portfolio() {
         </SectionLabel>
         <div className="grid md:grid-cols-2 gap-5">
           {PROJECTS.map((p, i) => (
-            <motion.div
-              key={p.title}
-              {...fadeUp(i * 0.09)}
-              whileHover={{ y: -6, scale: 1.015 }}
-              className="h-full"
-            >
-              <GradientBorder g1={p.g1} g2={p.g2} className="h-full">
-                <div className="p-6 flex flex-col h-full">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <div className="text-3xl mb-2">{p.emoji}</div>
-                      <h3
-                        className="text-lg font-bold"
-                        style={{
-                          background: `linear-gradient(135deg,${p.g1},${p.g2})`,
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                        }}
-                      >
-                        {p.title}
-                      </h3>
-                      <p className="text-xs text-gray-500 mt-0.5">{p.sub}</p>
-                    </div>
-                    <motion.a
-                      href="https://github.com/Suguresh7128"
-                      target="_blank"
-                      rel="noreferrer"
-                      whileHover={{ rotate: 12, scale: 1.2 }}
-                      className="text-gray-600 hover:text-gray-300 transition-colors"
-                    >
-                      <Github className="w-5 h-5" />
-                    </motion.a>
-                  </div>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-1">{p.desc}</p>
-                  {/* Tech badges */}
-                  <div className="flex flex-wrap gap-2">
-                    {p.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="px-2.5 py-0.5 text-[11px] font-semibold rounded-full"
-                        style={{
-                          background: `linear-gradient(135deg,${p.g1}22,${p.g2}22)`,
-                          border: `1px solid ${p.g1}44`,
-                          color: "rgba(255,255,255,0.65)",
-                        }}
-                      >
-                        {t}
-                      </span>
+                      <ProjectCard key={p.title} p={p} index={i} fadeUp={fadeUp} />
                     ))}
-                  </div>
-                </div>
-              </GradientBorder>
-            </motion.div>
-          ))}
         </div>
       </section>
 
@@ -977,29 +873,24 @@ export default function Portfolio() {
             </p>
 
             <div className="grid sm:grid-cols-2 gap-3 mb-7">
-              {[
-                { I: Mail, label: "sugureshay8@gmail.com", href: "mailto:sugureshay8@gmail.com", c: "#a78bfa" },
-                { I: Phone, label: "+91-9480639134", href: "tel:+919480639134", c: "#a78bfa" },
-                { I: Github, label: "github.com/Suguresh7128", href: "https://github.com/Suguresh7128", c: "#a78bfa" },
-                { I: Linkedin, label: "LinkedIn Profile", href: "https://linkedin.com/in/suguresh-a-y-57675b22b", c: "#a78bfa" },
-              ].map(({ I, label, href, c }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target={href.startsWith("http") ? "_blank" : undefined}
-                  rel="noreferrer"
-                  whileHover={{ scale: 1.03, y: -2 }}
-                  className="flex items-center gap-3 p-3 rounded-xl text-xs text-left transition-colors duration-200"
-                  style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    color: "rgba(255,255,255,0.6)",
-                  }}
-                >
-                  <I className="w-4 h-4 shrink-0" style={{ color: c }} />
-                  <span className="truncate">{label}</span>
-                </motion.a>
-              ))}
+              {CONTACT_ITEMS.map(({ I, label, href, c }) => (
+                              <motion.a
+                                key={label}
+                                href={href}
+                                target={href.startsWith("http") ? "_blank" : undefined}
+                                rel="noreferrer"
+                                whileHover={{ scale: 1.03, y: -2 }}
+                                className="flex items-center gap-3 p-3 rounded-xl text-xs text-left transition-colors duration-200"
+                                style={{
+                                  background: "rgba(255,255,255,0.04)",
+                                  border: "1px solid rgba(255,255,255,0.08)",
+                                  color: "rgba(255,255,255,0.6)",
+                                }}
+                              >
+                                <I className="w-4 h-4 shrink-0" style={{ color: c }} />
+                                <span className="truncate">{label}</span>
+                              </motion.a>
+                            ))}
             </div>
 
             <motion.a
