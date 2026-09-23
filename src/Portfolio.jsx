@@ -20,11 +20,11 @@ import {
   Star,
 } from "lucide-react";
 
-import GlassCard from './GlassCard';
-import GradientBorder from './GradientBorder';
-import SectionLabel from './SectionLabel';
-import ProjectCard from './ProjectCard';
-import SkillGroup from './SkillGroup';
+import GlassCard from './components/GlassCard';
+import GradientBorder from './components/GradientBorder';
+import SectionLabel from './components/SectionLabel';
+import ProjectCard from './components/ProjectCard';
+import SkillGroup from './components/SkillGroup';
 
 // ─────────────────────────────────────────────
 // DATA
