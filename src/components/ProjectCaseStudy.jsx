@@ -6,17 +6,20 @@ export default function ProjectCaseStudy({ project, onClose }) {
   const closeButtonRef = useRef(null);
 
   useEffect(() => {
+    if (!project) return undefined;
+
     const handleKey = (event) => {
       if (event.key === 'Escape') onClose();
     };
 
+    const previousOverflow = document.body.style.overflow;
     document.addEventListener('keydown', handleKey);
     document.body.style.overflow = 'hidden';
     closeButtonRef.current?.focus();
 
     return () => {
       document.removeEventListener('keydown', handleKey);
-      document.body.style.overflow = '';
+      document.body.style.overflow = previousOverflow;
     };
   }, [onClose, project]);
 

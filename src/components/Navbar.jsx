@@ -20,12 +20,10 @@ export default function Navbar({ NAV, active, scrollTo }) {
 
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
     };
   }, [mobileOpen]);
 
