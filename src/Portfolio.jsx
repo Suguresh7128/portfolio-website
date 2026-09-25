@@ -29,6 +29,12 @@ import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
 import ContactSection from './components/ContactSection';
+import SkillsSection from './components/SkillsSection';
+import ProjectsSection from './components/ProjectsSection';
+import ExperienceSection from './components/ExperienceSection';
+import CertificationsSection from './components/CertificationsSection';
+import EducationSection from './components/EducationSection';
+import BackgroundDecorations from './components/BackgroundDecorations';
 
 // ─────────────────────────────────────────────
 // DATA
@@ -315,57 +321,7 @@ export default function Portfolio() {
         }}
       />
 
-      {/* ── BACKGROUND ──────────────────────── */}
-      <div className="fixed inset-0 -z-20" style={{ background: "#050510" }} />
-      {/* Dot-grid */}
-      <div
-        className="fixed inset-0 -z-10 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-      />
-      {/* Glow orbs */}
-      <motion.div
-        className="fixed -z-10 rounded-full pointer-events-none"
-        animate={{ x: [0, 80, -40, 0], y: [0, -60, 50, 0] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          width: 500,
-          height: 500,
-          top: "10%",
-          left: "15%",
-          background: "radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <motion.div
-        className="fixed -z-10 rounded-full pointer-events-none"
-        animate={{ x: [0, -60, 40, 0], y: [0, 80, -30, 0] }}
-        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          width: 400,
-          height: 400,
-          top: "50%",
-          right: "10%",
-          background: "radial-gradient(circle, rgba(6,182,212,0.13) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
-      <motion.div
-        className="fixed -z-10 rounded-full pointer-events-none"
-        animate={{ x: [0, 50, -80, 0], y: [0, 50, -60, 0] }}
-        transition={{ duration: 32, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          width: 350,
-          height: 350,
-          bottom: "15%",
-          left: "35%",
-          background: "radial-gradient(circle, rgba(236,72,153,0.12) 0%, transparent 70%)",
-          filter: "blur(40px)",
-        }}
-      />
+      <BackgroundDecorations />
 
       <Navbar NAV={NAV} active={active} scrollTo={scrollTo} />
       <HeroSection FLOAT_TAGS={FLOAT_TAGS} SOCIAL_LINKS={SOCIAL_LINKS} typed={typed} scrollTo={scrollTo} />
@@ -375,197 +331,11 @@ export default function Portfolio() {
       ═══════════════════════════════════════ */}
       <AboutSection ABOUT_STATS={ABOUT_STATS} fadeUp={fadeUp} />
 
-      {/* ═══════════════════════════════════════
-          SKILLS
-      ═══════════════════════════════════════ */}
-      <section id="skills" className="py-28 px-4 max-w-5xl mx-auto">
-        <SectionLabel gradient="linear-gradient(90deg,#0891B2,#06B6D4)">
-          Technical Skills
-        </SectionLabel>
-        <div className="space-y-4">
-          {SKILL_GROUPS.map((group, gi) => (
-                      <SkillGroup key={group.label} group={group} index={gi} fadeUp={fadeUp} />
-                    ))}
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          PROJECTS
-      ═══════════════════════════════════════ */}
-      <section id="projects" className="py-28 px-4 max-w-5xl mx-auto">
-        <SectionLabel gradient="linear-gradient(90deg,#DB2777,#EC4899)">
-          Projects
-        </SectionLabel>
-        <div className="grid md:grid-cols-2 gap-5">
-          {PROJECTS.map((p, i) => (
-                      <ProjectCard key={p.title} p={p} index={i} fadeUp={fadeUp} />
-                    ))}
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          EXPERIENCE
-      ═══════════════════════════════════════ */}
-      <section id="experience" className="py-28 px-4 max-w-5xl mx-auto">
-        <SectionLabel gradient="linear-gradient(90deg,#0891B2,#7C3AED)">
-          Experience
-        </SectionLabel>
-        <div className="relative pl-6 md:pl-10">
-          {/* Vertical line */}
-          <div
-            className="absolute left-1.5 md:left-3.5 top-0 bottom-0 w-px"
-            style={{
-              background: "linear-gradient(to bottom, #7C3AED, #06B6D4, #10B981)",
-              opacity: 0.3,
-            }}
-          />
-          <div className="space-y-8">
-            {INTERNSHIPS.map((job, i) => (
-              <motion.div
-                key={job.company}
-                {...fadeUp(i * 0.12)}
-                className="relative"
-              >
-                {/* Timeline dot */}
-                <div
-                  className="absolute -left-[22px] md:-left-[30px] top-6 w-4 h-4 rounded-full"
-                  style={{
-                    background: `linear-gradient(135deg,${job.g1},${job.g2})`,
-                    boxShadow: `0 0 12px ${job.g1}80`,
-                    border: "2px solid #07071a",
-                  }}
-                />
-
-                <GlassCard className="p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
-                    <div>
-                      <h3 className="text-base font-bold text-white">{job.role}</h3>
-                      <span
-                        className="text-sm font-semibold"
-                        style={{
-                          background: `linear-gradient(90deg,${job.g1},${job.g2})`,
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                        }}
-                      >
-                        {job.company}
-                      </span>
-                    </div>
-                    <span
-                      className="text-[11px] font-semibold px-3 py-1 rounded-full whitespace-nowrap"
-                      style={{
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        color: "rgba(255,255,255,0.45)",
-                      }}
-                    >
-                      {job.period}
-                    </span>
-                  </div>
-                  <ul className="space-y-2">
-                    {job.points.map((pt, j) => (
-                      <li
-                        key={j}
-                        className="flex items-start gap-2.5 text-gray-400 text-sm"
-                      >
-                        <ChevronRight
-                          className="w-3.5 h-3.5 mt-0.5 shrink-0"
-                          style={{ color: job.g2 }}
-                        />
-                        {pt}
-                      </li>
-                    ))}
-                  </ul>
-                </GlassCard>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          CERTIFICATIONS
-      ═══════════════════════════════════════ */}
-      <section id="certifications" className="py-28 px-4 max-w-5xl mx-auto">
-        <SectionLabel gradient="linear-gradient(90deg,#D97706,#F59E0B)">
-          Certifications
-        </SectionLabel>
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {CERTS.map((c, i) => (
-            <motion.div
-              key={c.title}
-              {...fadeUp(i * 0.06)}
-              whileHover={{ scale: 1.04, y: -4 }}
-            >
-              <GlassCard
-                className="p-4 h-full flex flex-col gap-2"
-                style={
-                  c.featured
-                    ? {
-                        border: "1px solid rgba(245,158,11,0.35)",
-                        background: "rgba(245,158,11,0.05)",
-                      }
-                    : {}
-                }
-              >
-                {c.featured && (
-                  <div className="flex items-center gap-1 text-[10px] font-bold" style={{ color: "#F59E0B" }}>
-                    <Star className="w-3 h-3 fill-current" />
-                    FEATURED
-                  </div>
-                )}
-                <Award
-                  className="w-5 h-5"
-                  style={{ color: c.featured ? "#F59E0B" : "#a78bfa" }}
-                />
-                <h3 className="text-xs font-bold text-white leading-tight">{c.title}</h3>
-                <p className="text-[11px] text-gray-500">{c.issuer}</p>
-                <span className="text-[11px] text-gray-600 mt-auto">{c.year}</span>
-              </GlassCard>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════
-          EDUCATION
-      ═══════════════════════════════════════ */}
-      <section id="education" className="py-28 px-4 max-w-5xl mx-auto">
-        <SectionLabel gradient="linear-gradient(90deg,#059669,#06B6D4)">
-          Education
-        </SectionLabel>
-        <div className="space-y-5">
-          {EDUCATION.map((e, i) => (
-            <motion.div
-              key={e.degree}
-              {...fadeUp(i * 0.1)}
-              whileHover={{ scale: 1.01 }}
-            >
-              <GradientBorder g1={e.g1} g2={e.g2}>
-                <div className="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <div>
-                    <h3
-                      className="text-sm font-bold"
-                      style={{
-                        background: `linear-gradient(90deg,${e.g1},${e.g2})`,
-                        WebkitBackgroundClip: "text",
-                        WebkitTextFillColor: "transparent",
-                      }}
-                    >
-                      {e.degree}
-                    </h3>
-                    <p className="text-gray-400 text-xs mt-1">{e.institution}</p>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <div className="text-white text-sm font-bold">{e.score}</div>
-                    <div className="text-gray-500 text-[11px] mt-0.5">{e.period}</div>
-                  </div>
-                </div>
-              </GradientBorder>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      <SkillsSection SKILL_GROUPS={SKILL_GROUPS} fadeUp={fadeUp} />
+      <ProjectsSection PROJECTS={PROJECTS} fadeUp={fadeUp} />
+      <ExperienceSection INTERNSHIPS={INTERNSHIPS} fadeUp={fadeUp} />
+      <CertificationsSection CERTS={CERTS} fadeUp={fadeUp} />
+      <EducationSection EDUCATION={EDUCATION} fadeUp={fadeUp} />
 
       {/* ═══════════════════════════════════════
           CONTACT
