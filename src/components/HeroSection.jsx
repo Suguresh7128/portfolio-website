@@ -1,8 +1,10 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 
 export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo }) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       id="home"
@@ -16,22 +18,30 @@ export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo 
             left: `${8 + (i % 3) * 30}%`,
             top: `${18 + Math.floor(i / 3) * 55}%`,
           }}
-          animate={{ y: [0, -14, 0], opacity: [0.3, 0.65, 0.3] }}
-          transition={{
-            duration: 3.5 + i * 0.6,
-            repeat: Infinity,
-            delay: i * 0.5,
-            ease: 'easeInOut',
-          }}
+          animate={
+            prefersReducedMotion
+              ? { opacity: 0.45 }
+              : { y: [0, -14, 0], opacity: [0.3, 0.65, 0.3] }
+          }
+          transition={
+            prefersReducedMotion
+              ? { duration: 0.01 }
+              : {
+                  duration: 3.5 + i * 0.6,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                  ease: 'easeInOut',
+                }
+          }
         >
           {tag}
         </motion.div>
       ))}
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.8 }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+        transition={{ duration: prefersReducedMotion ? 0.01 : 0.6 }}
         className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full text-xs font-semibold"
         style={{
           background: 'rgba(5,150,105,0.12)',
@@ -43,13 +53,13 @@ export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo 
           className="w-1.5 h-1.5 rounded-full bg-emerald-400"
           style={{ boxShadow: '0 0 6px #34d399', animation: 'pulse 2s infinite' }}
         />
-        Open to full-time opportunities
+        Open to full-time Software Engineering opportunities
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        transition={{ duration: prefersReducedMotion ? 0.01 : 0.8, delay: prefersReducedMotion ? 0 : 0.1, ease: [0.22, 1, 0.36, 1] }}
         className="mb-3"
       >
         <div
@@ -78,9 +88,25 @@ export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo 
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        transition={{ delay: prefersReducedMotion ? 0 : 0.4 }}
+        className="mb-6"
+      >
+        <p className="text-xl md:text-3xl font-semibold tracking-tight text-white/90">
+          Full-Stack &amp; AI Software Engineer
+        </p>
+        <p className="mt-3 text-sm md:text-base text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          I build modern web applications, backend systems, and AI-powered products using Python,
+          React, Node.js, FastAPI, SQL, and cloud-ready engineering practices.
+        </p>
+        <div className="mt-4 text-sm text-gray-400">Bengaluru, Karnataka, India</div>
+      </motion.div>
+
+      <motion.div
+        initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: prefersReducedMotion ? 0 : 0.6 }}
         className="flex items-center justify-center gap-2 mb-10 min-h-8"
       >
         <Terminal className="w-4 h-4 text-purple-400 shrink-0" />
@@ -95,9 +121,9 @@ export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo 
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+        animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        transition={{ delay: prefersReducedMotion ? 0 : 0.9 }}
         className="flex flex-wrap justify-center gap-3 mb-10"
       >
         {SOCIAL_LINKS.map(({ I, href, label }) => (
@@ -122,9 +148,9 @@ export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo 
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={prefersReducedMotion ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.1 }}
+        transition={{ delay: prefersReducedMotion ? 0 : 1.1 }}
         className="flex gap-4 flex-wrap justify-center"
       >
         <motion.button
@@ -139,19 +165,21 @@ export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo 
         >
           View Projects →
         </motion.button>
-        <motion.button
+        <motion.a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noreferrer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => scrollTo('contact')}
-          className="px-6 py-3 rounded-xl font-semibold text-sm"
+          className="px-6 py-3 rounded-xl font-semibold text-sm inline-flex items-center justify-center"
           style={{
             background: 'rgba(255,255,255,0.05)',
             border: '1px solid rgba(255,255,255,0.15)',
             color: 'rgba(255,255,255,0.8)',
           }}
         >
-          Contact Me
-        </motion.button>
+          Download Resume
+        </motion.a>
       </motion.div>
 
       <motion.div

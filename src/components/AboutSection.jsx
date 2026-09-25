@@ -11,7 +11,7 @@ export default function AboutSection({ ABOUT_STATS, fadeUp }) {
         <motion.div {...fadeUp(0.05)}>
           <GlassCard className="p-7 h-full">
             <h2 className="text-2xl font-bold text-white mb-4">
-              Building at the intersection of{' '}
+              Building{' '}
               <span
                 style={{
                   background: 'linear-gradient(90deg,#a78bfa,#ec4899)',
@@ -19,17 +19,20 @@ export default function AboutSection({ ABOUT_STATS, fadeUp }) {
                   WebkitTextFillColor: 'transparent',
                 }}
               >
-                software & intelligence
-              </span>
+                impactful products
+              </span>{' '}
+              with software and AI
             </h2>
             <p className="text-gray-400 leading-relaxed text-sm">
-              Innovative Software Engineer with hands-on experience in Full Stack Development (MERN),
-              Cloud Technologies, and AI-driven solutions. Skilled in React, Node.js, SQL, and API
-              integration — with a strong Python and data analytics foundation.
+              I’m a B.E. graduate in Information Science and Engineering with hands-on experience building
+              full-stack web applications, AI-powered solutions, and backend systems. I work with Python,
+              React.js, Node.js, FastAPI, SQL, REST APIs, and modern cloud and DevOps tooling.
             </p>
             <p className="text-gray-400 leading-relaxed text-sm mt-3">
-              Oracle Certified Generative AI Professional, aiming to join dynamic engineering teams and
-              build scalable, intelligent, high-performance applications that bridge software and data.
+              Through internships and projects, I have worked with authentication, real-time communication,
+              databases, Docker, CI/CD, and cloud deployment workflows. I’m currently looking for an
+              entry-level software engineering opportunity where I can contribute to real-world products and
+              continue growing as an engineer.
             </p>
           </GlassCard>
         </motion.div>
