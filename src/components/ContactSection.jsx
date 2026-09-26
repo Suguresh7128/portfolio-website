@@ -72,6 +72,15 @@ export default function ContactSection({ CONTACT_ITEMS, fadeUp }) {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white"
             >
+              <Download className="h-4 w-4" /> View Resume
+            </motion.a>
+            <motion.a
+              href="/resume.pdf"
+              download="resume.pdf"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white"
+            >
               <Download className="h-4 w-4" /> Download Resume
             </motion.a>
             <motion.a

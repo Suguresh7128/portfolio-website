@@ -178,6 +178,20 @@ export default function HeroSection({ FLOAT_TAGS, SOCIAL_LINKS, typed, scrollTo 
             color: 'rgba(255,255,255,0.8)',
           }}
         >
+          View Resume
+        </motion.a>
+        <motion.a
+          href="/resume.pdf"
+          download="resume.pdf"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="px-6 py-3 rounded-xl font-semibold text-sm inline-flex items-center justify-center"
+          style={{
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(255,255,255,0.15)',
+            color: 'rgba(255,255,255,0.8)',
+          }}
+        >
           Download Resume
         </motion.a>
       </motion.div>

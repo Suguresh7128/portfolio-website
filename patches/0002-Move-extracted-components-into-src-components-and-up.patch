@@ -1,0 +1,231 @@
+From 742740b73c39ddd277b33635d9d6561844808189 Mon Sep 17 00:00:00 2001
+From: Suguresh7128 <sugureshay8@gmail.com>
+Date: Wed, 23 Sep 2026 18:02:20 +0530
+Subject: [PATCH 2/3] Move extracted components into src/components/ and update
+ imports
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+---
+ src/Portfolio.jsx                 | 10 +++---
+ src/components/GlassCard.jsx      | 12 +++++++
+ src/components/GradientBorder.jsx | 14 ++++++++
+ src/components/ProjectCard.jsx    | 57 +++++++++++++++++++++++++++++++
+ src/components/SectionLabel.jsx   | 22 ++++++++++++
+ src/components/SkillGroup.jsx     | 51 +++++++++++++++++++++++++++
+ 6 files changed, 161 insertions(+), 5 deletions(-)
+ create mode 100644 src/components/GlassCard.jsx
+ create mode 100644 src/components/GradientBorder.jsx
+ create mode 100644 src/components/ProjectCard.jsx
+ create mode 100644 src/components/SectionLabel.jsx
+ create mode 100644 src/components/SkillGroup.jsx
+
+diff --git a/src/Portfolio.jsx b/src/Portfolio.jsx
+index 112c8ec..ff0d090 100644
+--- a/src/Portfolio.jsx
++++ b/src/Portfolio.jsx
+@@ -20,11 +20,11 @@ import {
+   Star,
+ } from "lucide-react";
+ 
+-import GlassCard from './GlassCard';
+-import GradientBorder from './GradientBorder';
+-import SectionLabel from './SectionLabel';
+-import ProjectCard from './ProjectCard';
+-import SkillGroup from './SkillGroup';
++import GlassCard from './components/GlassCard';
++import GradientBorder from './components/GradientBorder';
++import SectionLabel from './components/SectionLabel';
++import ProjectCard from './components/ProjectCard';
++import SkillGroup from './components/SkillGroup';
+ 
+ // ─────────────────────────────────────────────
+ // DATA
+diff --git a/src/components/GlassCard.jsx b/src/components/GlassCard.jsx
+new file mode 100644
+index 0000000..48eaed8
+--- /dev/null
++++ b/src/components/GlassCard.jsx
+@@ -0,0 +1,12 @@
++import React from 'react';
++
++export default function GlassCard({ children, className = '', style = {} }) {
++  return (
++    <div
++      className={`bg-white/[0.04] border border-white/[0.08] rounded-2xl ${className}`}
++      style={{ backdropFilter: 'blur(16px)', ...style }}
++    >
++      {children}
++    </div>
++  );
++}
+diff --git a/src/components/GradientBorder.jsx b/src/components/GradientBorder.jsx
+new file mode 100644
+index 0000000..58833e7
+--- /dev/null
++++ b/src/components/GradientBorder.jsx
+@@ -0,0 +1,14 @@
++import React from 'react';
++
++export default function GradientBorder({ g1, g2, children, className = '' }) {
++  return (
++    <div
++      className={`rounded-2xl p-px ${className}`}
++      style={{ background: `linear-gradient(135deg, ${g1}, ${g2})` }}
++    >
++      <div className="rounded-2xl h-full" style={{ background: '#07071a' }}>
++        {children}
++      </div>
++    </div>
++  );
++}
+diff --git a/src/components/ProjectCard.jsx b/src/components/ProjectCard.jsx
+new file mode 100644
+index 0000000..68cbff9
+--- /dev/null
++++ b/src/components/ProjectCard.jsx
+@@ -0,0 +1,57 @@
++import React from 'react';
++import { motion } from 'framer-motion';
++import GradientBorder from './GradientBorder';
++import GlassCard from './GlassCard';
++import { Github } from 'lucide-react';
++
++export default function ProjectCard({ p, index, fadeUp }) {
++  return (
++    <motion.div {...(fadeUp ? fadeUp(index * 0.09) : {})} whileHover={{ y: -6, scale: 1.015 }} className="h-full">
++      <GradientBorder g1={p.g1} g2={p.g2} className="h-full">
++        <div className="p-6 flex flex-col h-full">
++          <div className="flex items-start justify-between mb-4">
++            <div>
++              <div className="text-3xl mb-2">{p.emoji}</div>
++              <h3
++                className="text-lg font-bold"
++                style={{
++                  background: `linear-gradient(135deg,${p.g1},${p.g2})`,
++                  WebkitBackgroundClip: 'text',
++                  WebkitTextFillColor: 'transparent',
++                }}
++              >
++                {p.title}
++              </h3>
++              <p className="text-xs text-gray-500 mt-0.5">{p.sub}</p>
++            </div>
++            <motion.a
++              href="https://github.com/Suguresh7128"
++              target="_blank"
++              rel="noreferrer"
++              whileHover={{ rotate: 12, scale: 1.2 }}
++              className="text-gray-600 hover:text-gray-300 transition-colors"
++            >
++              <Github className="w-5 h-5" />
++            </motion.a>
++          </div>
++          <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-1">{p.desc}</p>
++          <div className="flex flex-wrap gap-2">
++            {p.tech.map((t) => (
++              <span
++                key={t}
++                className="px-2.5 py-0.5 text-[11px] font-semibold rounded-full"
++                style={{
++                  background: `linear-gradient(135deg,${p.g1}22,${p.g2}22)`,
++                  border: `1px solid ${p.g1}44`,
++                  color: 'rgba(255,255,255,0.65)',
++                }}
++              >
++                {t}
++              </span>
++            ))}
++          </div>
++        </div>
++      </GradientBorder>
++    </motion.div>
++  );
++}
+diff --git a/src/components/SectionLabel.jsx b/src/components/SectionLabel.jsx
+new file mode 100644
+index 0000000..5ebe223
+--- /dev/null
++++ b/src/components/SectionLabel.jsx
+@@ -0,0 +1,22 @@
++import React from 'react';
++import { motion } from 'framer-motion';
++
++export default function SectionLabel({ children, gradient }) {
++  return (
++    <motion.div
++      initial={{ opacity: 0, y: 32 }}
++      whileInView={{ opacity: 1, y: 0 }}
++      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
++      viewport={{ once: true }}
++      className="mb-12"
++    >
++      <p
++        className="text-xs font-bold tracking-[0.25em] uppercase mb-2"
++        style={{ background: gradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
++      >
++        ✦ {children}
++      </p>
++      <div className="h-px w-16 rounded-full opacity-50" style={{ background: gradient }} />
++    </motion.div>
++  );
++}
+diff --git a/src/components/SkillGroup.jsx b/src/components/SkillGroup.jsx
+new file mode 100644
+index 0000000..f26b0f5
+--- /dev/null
++++ b/src/components/SkillGroup.jsx
+@@ -0,0 +1,51 @@
++import React from 'react';
++import { motion } from 'framer-motion';
++import GlassCard from './GlassCard';
++
++export default function SkillGroup({ group, index, fadeUp }) {
++  const { label, Icon, from, to, items } = group;
++  return (
++    <motion.div {...(fadeUp ? fadeUp(index * 0.07) : {})}>
++      <GlassCard className="p-5">
++        <div className="flex items-center gap-3 mb-4">
++          <div
++            className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
++            style={{ background: `linear-gradient(135deg,${from},${to})` }}
++          >
++            <Icon className="w-4 h-4 text-white" />
++          </div>
++          <span
++            className="text-sm font-bold"
++            style={{
++              background: `linear-gradient(90deg,${from},${to})`,
++              WebkitBackgroundClip: 'text',
++              WebkitTextFillColor: 'transparent',
++            }}
++          >
++            {label}
++          </span>
++        </div>
++        <div className="flex flex-wrap gap-2">
++          {items.map((skill, si) => (
++            <motion.span
++              key={skill}
++              initial={{ opacity: 0, scale: 0.85 }}
++              whileInView={{ opacity: 1, scale: 1 }}
++              viewport={{ once: true }}
++              transition={{ delay: index * 0.04 + si * 0.03 }}
++              whileHover={{ y: -2, scale: 1.06 }}
++              className="px-3 py-1 text-xs rounded-full cursor-default transition-colors duration-200"
++              style={{
++                background: 'rgba(255,255,255,0.05)',
++                border: '1px solid rgba(255,255,255,0.1)',
++                color: 'rgba(255,255,255,0.7)',
++              }}
++            >
++              {skill}
++            </motion.span>
++          ))}
++        </div>
++      </GlassCard>
++    </motion.div>
++  );
++}
+-- 
+2.49.0.windows.1
+

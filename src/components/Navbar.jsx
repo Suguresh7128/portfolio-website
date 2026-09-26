@@ -70,6 +70,7 @@ export default function Navbar({ NAV, active, scrollTo }) {
                     href="/resume.pdf"
                     target="_blank"
                     rel="noreferrer"
+                    download="resume.pdf"
                     className="relative inline-flex px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors duration-200"
                     style={{ color: 'rgba(255,255,255,0.88)' }}
                   >
@@ -102,6 +103,7 @@ export default function Navbar({ NAV, active, scrollTo }) {
             href="/resume.pdf"
             target="_blank"
             rel="noreferrer"
+            download="resume.pdf"
             className="inline-flex items-center px-3 py-1.5 rounded-xl text-[10px] font-semibold border border-white/10 bg-white/5 text-white"
           >
             Resume
